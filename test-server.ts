@@ -3,7 +3,7 @@ import express, { type RequestHandler } from 'express';
 
 const app = express();
 const PORT = Number(process.env.PORT ?? 3000);
-const CLIENT_ID = process.env.GITHUB_CLIENT_ID ?? 'Ov23liX51hDSFlM6Ak7a';
+const CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 const FRONTEND_URL = process.env.FRONTEND_URL ?? 'http://localhost:5173'; // your React dev URL
 
 // --- Result typing from your OAuth handler ---
