@@ -1,5 +1,6 @@
 // github-auth.ts
 // Backend logic for GitHub SSO
+require('dotenv').config();
 
 // GitHub OAuth Configuration
 const GITHUB_CONFIG = {

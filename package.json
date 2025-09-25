@@ -1,11 +1,23 @@
 {
+  "type": "module",
   "dependencies": {
+    "@octokit/plugin-throttling": "^11.0.1",
+    "@octokit/rest": "^22.0.0",
     "@types/node-fetch": "^2.6.13",
-    "node-fetch": "^3.3.2",
-    "typescript": "^5.9.2"
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "node-fetch": "^3.3.2"
   },
   "devDependencies": {
-    "@types/node": "^24.3.1",
-    "ts-node": "^10.9.2"
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.5.2",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  },
+  "scripts": {
+    "dev": "tsx test-server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/test-server.js"
   }
 }
