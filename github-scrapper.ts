@@ -2,6 +2,9 @@
 const fetch = globalThis.fetch || require('node-fetch');
 // Simple GitHub REST API scraper to test fetching user data
 
+//Import functions from db file
+import { insertUser } from "./db";
+
 // Define types for the GitHub API responses
 interface GitHubUser {
   login: string;
@@ -118,6 +121,9 @@ class GitHubScraper {
     // 1. Get user profile
     console.log('\n USER PROFILE:');
     const user = await this.getUserProfile(username);
+    // Add user to database.
+    // Hope this just works
+    insertUser(user);
     console.log(`- Name: ${user.name || user.login}`);
     console.log(`- Bio: ${user.bio ? user.bio : 'Not available'}`);
     console.log(`- Avatar: ${user.avatar_url}`);
