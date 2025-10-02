@@ -5,6 +5,8 @@
 
 import Database from "better-sqlite3";
 
+
+
 const db = new Database("userdb.sqlite");
 
 //Exportable function to insert users into the database
@@ -19,4 +21,25 @@ insertUser({login: "abcdefg", name: "Katie", bio: "sure", public_repos: 1, follo
 
 //Will create another table if this works. Just need something to work.
 //Works in my DB Browser. Gonna see if I can hook it into the scraper.
+
+//Print Users to check work
+export function printUsers(){
+    //query all users
+    const stmt = db.prepare(`SELECT * FROM USERS`)
+    //https://www.reddit.com/r/learnprogramming/comments/ubsv26/better_sqlite_3_get_only_returns_one_row_of/
+    const users = stmt.all(); //.all() returns array of the rows of the table
+
+    if (users.length == 0) 
+    {
+        console.log("No users in database.");
+        return;
+    }
+    console.log("Users in database:");
+    users.forEach((user) =>{
+        console.log(user);
+    });
+}
+
+printUsers();
+
 

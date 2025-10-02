@@ -262,6 +262,12 @@ async function main() {
   } catch (error) {
     console.error('Failed to scrape data:', error);
   }
+  //trying another one to see updates
+  try {
+    await scraper.scrapeUserData('xNotch');
+  } catch (error) {
+    console.error('Failed to scrape data:', error);
+  }
 }
 
 main();
