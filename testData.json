@@ -22,7 +22,7 @@
     {
       "taskID": 1,
       "title": "testTask1",
-      "datePublished": "2024-10-12T14:32:11Z",
+      "daysSincePublished": 312,
       "forUser": false,
       "taskLanguage": [
         "python"
@@ -34,14 +34,14 @@
       ],
       "topicScore": 0,
       "languageScore": "0.00",
-      "dateScore": "0.00",
+      "dateScore": 0,
       "totalScore": 0
     },
     {
       "taskID": 2,
       "title": "testTask2",
-      "datePublished": "2025-03-27T22:41:36Z",
-      "forUser": false,
+      "daysSincePublished": 45,
+      "forUser": true,
       "taskLanguage": [
         "java"
       ],
@@ -51,14 +51,14 @@
         "android"
       ],
       "topicScore": 0,
-      "languageScore": "0.06",
-      "dateScore": "0.00",
-      "totalScore": 0.06
+      "languageScore": "0.00",
+      "dateScore": "9.00",
+      "totalScore": 9
     },
     {
       "taskID": 3,
       "title": "testTask3",
-      "datePublished": "2025-09-10T05:44:18Z",
+      "daysSincePublished": 127,
       "forUser": false,
       "taskLanguage": [
         "javascript"
@@ -68,15 +68,15 @@
         "express",
         "react"
       ],
-      "topicScore": 9,
-      "languageScore": "7.00",
-      "dateScore": "15.40",
-      "totalScore": 31.4
+      "topicScore": 0.09000000000000001,
+      "languageScore": "0.07",
+      "dateScore": 0,
+      "totalScore": 0
     },
     {
       "taskID": 4,
       "title": "testTask4",
-      "datePublished": "2025-02-18T16:02:10Z",
+      "daysSincePublished": 263,
       "forUser": false,
       "taskLanguage": [
         "typescript"
@@ -87,14 +87,14 @@
         "nextjs"
       ],
       "topicScore": 0,
-      "languageScore": "35.00",
-      "dateScore": "0.00",
-      "totalScore": 35
+      "languageScore": "0.35",
+      "dateScore": 0,
+      "totalScore": 0
     },
     {
       "taskID": 5,
       "title": "testTask5",
-      "datePublished": "2025-01-09T03:55:27Z",
+      "daysSincePublished": 184,
       "forUser": false,
       "taskLanguage": [
         "html"
@@ -104,16 +104,16 @@
         "web-development",
         "bootstrap"
       ],
-      "topicScore": 18,
-      "languageScore": "1.40",
-      "dateScore": "0.00",
-      "totalScore": 19.4
+      "topicScore": 0.18000000000000002,
+      "languageScore": "0.01",
+      "dateScore": 0,
+      "totalScore": 0
     },
     {
       "taskID": 6,
       "title": "testTask6",
-      "datePublished": "2025-07-25T20:56:03Z",
-      "forUser": false,
+      "daysSincePublished": 79,
+      "forUser": true,
       "taskLanguage": [
         "css"
       ],
@@ -122,15 +122,15 @@
         "tailwindcss",
         "responsive-design"
       ],
-      "topicScore": 9,
-      "languageScore": "0.28",
-      "dateScore": "6.00",
-      "totalScore": 15.28
+      "topicScore": 0.09000000000000001,
+      "languageScore": "0.00",
+      "dateScore": "15.80",
+      "totalScore": 15.89
     },
     {
       "taskID": 7,
       "title": "testTask7",
-      "datePublished": "2025-04-30T11:18:22Z",
+      "daysSincePublished": 201,
       "forUser": false,
       "taskLanguage": [
         "typescript"
@@ -141,14 +141,14 @@
         "vue"
       ],
       "topicScore": 0,
-      "languageScore": "35.00",
-      "dateScore": "0.00",
-      "totalScore": 35
+      "languageScore": "0.35",
+      "dateScore": 0,
+      "totalScore": 0
     },
     {
       "taskID": 8,
       "title": "testTask8",
-      "datePublished": "2024-12-21T19:13:44Z",
+      "daysSincePublished": 356,
       "forUser": false,
       "taskLanguage": [
         "assembly"
@@ -160,14 +160,14 @@
       ],
       "topicScore": 0,
       "languageScore": "0.00",
-      "dateScore": "0.00",
+      "dateScore": 0,
       "totalScore": 0
     },
     {
       "taskID": 9,
       "title": "testTask9",
-      "datePublished": "2025-06-14T07:29:51Z",
-      "forUser": false,
+      "daysSincePublished": 14,
+      "forUser": true,
       "taskLanguage": [
         "C"
       ],
@@ -178,13 +178,13 @@
       ],
       "topicScore": 0,
       "languageScore": "0.00",
-      "dateScore": "0.00",
-      "totalScore": 0
+      "dateScore": "2.80",
+      "totalScore": 2.8
     },
     {
       "taskID": 10,
       "title": "testTask10",
-      "datePublished": "2024-11-05T08:47:59Z",
+      "daysSincePublished": 278,
       "forUser": false,
       "taskLanguage": [
         "html"
@@ -194,10 +194,10 @@
         "html5",
         "accessibility"
       ],
-      "topicScore": 9,
-      "languageScore": "1.40",
-      "dateScore": "0.00",
-      "totalScore": 10.4
+      "topicScore": 0.09000000000000001,
+      "languageScore": "0.01",
+      "dateScore": 0,
+      "totalScore": 0
     }
   ]
 }
