@@ -15,8 +15,3 @@ venv/
 __pycache__/
 *.pyc
 model/
-
-#github auth info
-GITHUB_CLIENT_ID=Ov23liX51hDSFlM6Ak7a
-GITHUB_CLIENT_SECRET=02bc9af63e93bcce487cdc4544d62104609ac8ad
-REDIRECT_URI=http://localhost:3000/callback
