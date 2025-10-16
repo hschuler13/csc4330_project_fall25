@@ -1,0 +1,106 @@
+.navbar {
+  height: 100%;  
+  width: 61px; 
+  position: fixed; 
+  z-index: 1; 
+  top: 0;  
+  right: 0;
+  background-color: #2e2823; 
+  overflow-x: hidden; 
+  padding-top: 50px;
+  transition: width 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top-left-radius: 18px;
+  border-bottom-left-radius: 18px;
+}
+.navbar.open {
+  width: 210px;
+}
+
+.navbar.open .triangle {
+  left: 20px;
+}
+
+.triangle {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-80%);
+  width: 0;
+  height: 0;
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+  border-right: 30px solid #dab924; /* color of triangle */
+  cursor: pointer;
+  margin: 2px 0;
+  transition: transform 0.2s, right 0.5;
+}
+
+.triangle:hover {
+  transform: translateY(-80%) scale(1.15);
+}
+
+.navbar .HomeNav {
+  padding: 15px 8px 15px 32px;
+  text-decoration: none;
+  font-size: 22px;
+  color: #a390e3;
+  display: block;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+.navbar.open .HomeNav {
+  opacity: 1; 
+  transform: translateX(0);
+}
+
+.navbar .Link2 {
+  padding: 15px 8px 15px 32px;
+  text-decoration: none;
+  display: block;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.3s, transform 0.3s;
+  font-size: 22px;
+  color: #f1f1f1;
+  display: block;
+}
+.navbar.open .Link2 {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.navbar .Link3 {
+  padding: 15px 8px 15px 32px;
+  text-decoration: none;
+  display: block;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.3s, transform 0.3s;
+  font-size: 22px;
+  color: #f1f1f1;
+  display: block;
+}
+.navbar.open .Link3 {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.navbar .Link4 {
+  padding: 15px 8px 15px 32px;
+  text-decoration: none;
+  display: block;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.3s, transform 0.3s;
+  font-size: 22px;
+  color: #f1f1f1;
+  display: block;
+}
+.navbar.open .Link4 {
+  opacity: 1;
+  transform: translateX(0);
+}
+

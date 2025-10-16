@@ -1,0 +1,15 @@
+.Settings {
+    position: relative;
+    left : 0px;
+    text-align: center;
+}
+.Settings::before{
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0; 
+    bottom: 0; 
+    z-index : -1;
+    background: linear-gradient(rgb(228, 223, 215), rgb(222, 181, 245));
+}

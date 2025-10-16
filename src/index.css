@@ -1,0 +1,38 @@
+:root, .App {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  margin: 0; 
+  padding: 0;
+  border: none;
+  height: 100%;
+  width : 100%;
+  box-sizing: border-box;
+
+
+}
+a {
+  font-weight: 500;
+  color: #23063f;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #1a48ad;
+}
+
+
+button:hover {
+  border-color: #8084c4;
+}
+
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #752a2a;
+  }
+  a:hover {
+    color: #d7d8db;
+  }
+  button {
+    background-color: #bd6e6e;
+  }
+}
