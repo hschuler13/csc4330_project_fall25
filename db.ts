@@ -43,3 +43,31 @@ export function printUsers(){
 printUsers();
 
 
+//Exportable function to insert repos into the database
+export function insertRepo(user_login : string, repo: any) 
+{
+    const stmt = db.prepare(`INSERT OR REPLACE INTO repos
+                                    (full_name, user_login, name, description, language, stargazers_count, fork, updated_at, has_issues, open_issues_count, topics)
+                                    VALUES (?,?,?,?,?,?,?,?,?,?,?)`);
+
+    //This table alone gave me tons of trouble. I think it was the topics being an array, but I couldn't get it fixed. This was ChatGPTs solution given my errors. I will fix this.
+    //Topics may have been empty, causing more problems.
+    stmt.run(repo.full_name , user_login , repo.name, repo.description, repo.language, repo.stargazers_count, repo.fork ? 0:1 , repo.updated_at, repo.has_issues ? 0:1, repo.open_issues_count, JSON.stringify(repo.topics || []));
+}
+
+
+//Exportable function to keep track of pull requests
+
+export function insertPullRequest(user_login: string, pr: any) {
+    const stmt = db.prepare(`
+      INSERT OR REPLACE INTO pullreqs
+      (user_login, repository, issue_number, title, state, created_at, updated_at, url)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+    // Extract repo name cleanly from the API data
+    //repo name from scraper.ts
+    const repoName = pr.repository_url.split('/').slice(-2).join('/');
+    stmt.run(user_login, repoName, pr.number, pr.title, pr.state, pr.created_at, pr.updated_at, pr.html_url);
+  }
+  
+

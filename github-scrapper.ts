@@ -3,7 +3,7 @@ const fetch = globalThis.fetch || require('node-fetch');
 // Simple GitHub REST API scraper to test fetching user data
 
 //Import functions from db file
-import { insertUser } from "./db";
+import { insertUser , insertRepo, insertPullRequest } from "./db";
 
 // Define types for the GitHub API responses
 interface GitHubUser {
@@ -144,6 +144,8 @@ class GitHubScraper {
       console.log(`  - Stars: ${repo.stargazers_count}`);
       console.log(`  - Author: ${repo.fork ? 'Others (forked)' : 'Original author'}`);
       console.log(`  - Last Updated: ${new Date(repo.updated_at).toLocaleDateString()}`);
+      //insert repositories into the db
+      insertRepo(username, repo);
       
       // Display topics for this repo
       if (repo.topics && repo.topics.length > 0) {
@@ -188,6 +190,8 @@ class GitHubScraper {
         console.log(`  • ${pr.title}`);
         console.log(`    Repository: ${pr.repository_url.split('/').slice(-2).join('/')}`);
         console.log(`    State: ${pr.state}`);
+        //insert the pull request data into the db
+        insertPullRequest(username, pr);
       });
     }
     
