@@ -3,19 +3,17 @@
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "target": "esnext",
-
+    "outDir": "./dist",           // ← ADD THIS
+    "rootDir": "./src",            // ← ADD THIS
     "strict": true,
     "types": ["node"],
-
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-
-    // Optional: turn this OFF for simpler interop with CommonJS packages like express
     "verbatimModuleSyntax": false,
-
     "skipLibCheck": true,
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true
-  }
+  },
+  "include": ["src/**/*"]          // ← ADD THIS
 }
