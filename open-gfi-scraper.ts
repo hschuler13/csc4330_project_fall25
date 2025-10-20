@@ -69,7 +69,7 @@ async function graphqlWithBackoff(query: string, variables: any, maxRetries: num
   throw new Error(`Failed after ${maxRetries} retries`);
 }
 
-// Interface for open issues WITH repo_topics
+// Interface for open issues WITH repo_topics and languages
 interface OpenIssue {
   repo_name: string;
   repo_owner: string;
@@ -85,7 +85,9 @@ interface OpenIssue {
   days_open: number;
   assignees: number;
   participants: number;
-  repo_topics: string[]; // INCLUDED
+  repo_topics: string[]; // Repository topics
+  primary_language: string | null; // Main language
+  languages: { name: string; percentage: number }[]; // All languages with percentages
 }
 
 class OpenGFIScraper {
@@ -128,11 +130,11 @@ class OpenGFIScraper {
     }
   }
 
-  // Search for open GFI issues across all GitHub with topics
+  // Search for open GFI issues across all GitHub with topics and languages
   async searchGlobalGFIIssues(maxResults: number = 500): Promise<void> {
     console.log(`\n🌍 Searching for open GFI issues across all GitHub (max ${maxResults})...`);
 
-    // Reduced batch size and complexity for stability
+    // Query includes languages now
     const query = `
       query SearchGFIIssues($queryStr: String!, $cursor: String) {
         search(query: $queryStr, type: ISSUE, first: 50, after: $cursor) {
@@ -144,6 +146,14 @@ class OpenGFIScraper {
                 name
                 owner { login }
                 stargazerCount
+                primaryLanguage { name }
+                languages(first: 20, orderBy: {field: SIZE, direction: DESC}) { 
+                  totalSize
+                  edges {
+                    node { name }
+                    size
+                  }
+                }
                 repositoryTopics(first: 10) { 
                   nodes { 
                     topic { name } 
@@ -200,7 +210,20 @@ class OpenGFIScraper {
               ?.map((n: any) => n?.topic?.name)
               .filter(Boolean) ?? [];
 
-          const openIssue = this.processOpenIssue(issue, undefined, undefined, repoTopics);
+          // Extract primary language
+          const primaryLanguage = issue.repository.primaryLanguage?.name || null;
+
+          // Extract all languages with percentages
+          const languages = this.processLanguages(issue.repository.languages);
+
+          const openIssue = this.processOpenIssue(
+            issue, 
+            undefined, 
+            undefined, 
+            repoTopics,
+            primaryLanguage,
+            languages
+          );
           this.issues.push(openIssue);
           totalFetched++;
 
@@ -233,7 +256,22 @@ class OpenGFIScraper {
     console.log(`✅ Found ${totalFetched} open GFI issues globally`);
   }
 
-  // Fetch from specific repositories with topics
+  // Helper to process languages and calculate percentages
+  private processLanguages(languagesData: any): { name: string; percentage: number }[] {
+    if (!languagesData || !languagesData.edges) return [];
+    
+    const totalSize = languagesData.totalSize || 0;
+    if (totalSize === 0) return [];
+    
+    return languagesData.edges
+      .map((edge: any) => ({
+        name: edge.node?.name || 'Unknown',
+        percentage: Math.round((edge.size / totalSize) * 1000) / 10 // Round to 1 decimal
+      }))
+      .filter((lang: any) => lang.percentage > 0); // Only include languages with >0%
+  }
+
+  // Fetch from specific repositories with topics and languages
   async fetchFromTargetRepos(): Promise<void> {
     console.log("\n📦 Fetching open GFI issues from target repositories...\n");
 
@@ -247,13 +285,21 @@ class OpenGFIScraper {
     }
   }
 
-  // Fetch from a specific repository with topics
+  // Fetch from a specific repository with topics and languages
   async fetchRepoOpenGFIIssues(owner: string, repo: string): Promise<void> {
     console.log(`  Checking ${owner}/${repo}...`);
 
     const query = `
       query GetOpenGFIIssues($owner: String!, $repo: String!, $cursor: String) {
         repository(owner: $owner, name: $repo) {
+          primaryLanguage { name }
+          languages(first: 20, orderBy: {field: SIZE, direction: DESC}) { 
+            totalSize
+            edges {
+              node { name }
+              size
+            }
+          }
           repositoryTopics(first: 10) { 
             nodes { 
               topic { name } 
@@ -303,11 +349,14 @@ class OpenGFIScraper {
 
       console.log(`    Found ${result.repository.issues.totalCount} open GFI issues`);
 
-      // Extract repository topics
+      // Extract repository data
       const repoTopics: string[] =
         result.repository.repositoryTopics?.nodes
           ?.map((n: any) => n?.topic?.name)
           .filter(Boolean) ?? [];
+      
+      const primaryLanguage = result.repository.primaryLanguage?.name || null;
+      const languages = this.processLanguages(result.repository.languages);
 
       let hasNextPage = true;
       while (hasNextPage) {
@@ -323,7 +372,14 @@ class OpenGFIScraper {
         const nodes = pageResult.repository.issues.nodes || [];
 
         for (const issue of nodes) {
-          const openIssue = this.processOpenIssue(issue, owner, repo, repoTopics);
+          const openIssue = this.processOpenIssue(
+            issue, 
+            owner, 
+            repo, 
+            repoTopics,
+            primaryLanguage,
+            languages
+          );
           this.issues.push(openIssue);
           repoIssueCount++;
         }
@@ -343,12 +399,14 @@ class OpenGFIScraper {
     }
   }
 
-  // Process issue with topics
+  // Process issue with topics and languages
   private processOpenIssue(
     issue: any,
     owner?: string,
     repo?: string,
-    repoTopics?: string[]
+    repoTopics?: string[],
+    primaryLanguage?: string | null,
+    languages?: { name: string; percentage: number }[]
   ): OpenIssue {
     const repoOwner = owner || issue.repository?.owner?.login || "unknown";
     const repoName = repo || issue.repository?.name || "unknown";
@@ -364,6 +422,14 @@ class OpenGFIScraper {
       (issue.repository?.repositoryTopics?.nodes || [])
         .map((n: any) => n?.topic?.name)
         .filter(Boolean) ?? [];
+    
+    // Get primary language from passed parameter or from issue repository
+    const mainLanguage = primaryLanguage ?? 
+      issue.repository?.primaryLanguage?.name ?? null;
+    
+    // Get languages from passed parameter or process from issue repository
+    const repoLanguages = languages ?? 
+      this.processLanguages(issue.repository?.languages) ?? [];
 
     return {
       repo_owner: repoOwner,
@@ -380,7 +446,9 @@ class OpenGFIScraper {
       days_open: daysOpen,
       assignees: issue.assignees?.totalCount || 0,
       participants: issue.participants?.totalCount || 0,
-      repo_topics: topics, // INCLUDED
+      repo_topics: topics,
+      primary_language: mainLanguage,
+      languages: repoLanguages
     };
   }
 
@@ -469,6 +537,26 @@ class OpenGFIScraper {
       console.log("\nTop 10 repository topics:");
       for (const [topic, count] of topTopics) {
         console.log(`  ${topic}: ${count} issues`);
+      }
+    }
+
+    // Show language distribution
+    const languageCounts = new Map<string, number>();
+    for (const issue of this.issues) {
+      if (issue.primary_language) {
+        languageCounts.set(issue.primary_language, (languageCounts.get(issue.primary_language) || 0) + 1);
+      }
+    }
+    
+    const topLanguages = Array.from(languageCounts.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10);
+    
+    if (topLanguages.length > 0) {
+      console.log("\nTop 10 primary programming languages:");
+      for (const [lang, count] of topLanguages) {
+        const pct = ((count / this.issues.length) * 100).toFixed(1);
+        console.log(`  ${lang}: ${count} issues (${pct}%)`);
       }
     }
   }

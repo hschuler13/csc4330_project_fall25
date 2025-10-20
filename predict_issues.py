@@ -26,6 +26,23 @@ def _flatten_list(x):
         return '; '.join(map(str, x))
     return '' if x is None else str(x)
 
+def _format_languages(languages):
+    """Format language list with percentages into readable string"""
+    if not languages:
+        return ''
+    if isinstance(languages, list):
+        # Handle list of dict objects with name and percentage
+        formatted = []
+        for lang in languages:
+            if isinstance(lang, dict):
+                name = lang.get('name', 'Unknown')
+                pct = lang.get('percentage', 0)
+                formatted.append(f"{name}:{pct}%")
+            else:
+                formatted.append(str(lang))
+        return '; '.join(formatted)
+    return str(languages)
+
 def main():
     # Load the trained model
     predictor = GFIPredictor()
@@ -49,7 +66,7 @@ def main():
             open_issues_df[col] = _normalize_timestamp_naive(open_issues_df[col])
 
     # Ensure list-like fields are lists (prevents errors later)
-    for col in ['labels', 'assignees', 'participants', 'languages', 'repo_topics']:
+    for col in ['labels', 'assignees', 'participants', 'repo_topics']:
         if col in open_issues_df.columns:
             open_issues_df[col] = open_issues_df[col].apply(_ensure_list)
 
@@ -59,8 +76,12 @@ def main():
     # --- Post-process for a clean, teammate-friendly CSV ---
     df = top_recommendations.copy()
 
-    # Flatten list fields
-    for col in ['labels', 'assignees', 'participants', 'languages', 'repo_topics']:
+    # Handle languages specially - format with percentages
+    if 'languages' in df.columns:
+        df['languages'] = df['languages'].apply(_format_languages)
+
+    # Flatten other list fields
+    for col in ['labels', 'assignees', 'participants', 'repo_topics']:
         if col in df.columns:
             df[col] = df[col].apply(_flatten_list)
 
@@ -88,13 +109,18 @@ def main():
     if 'repo_full_name' not in df.columns and {'repo_owner','repo_name'}.issubset(df.columns):
         df['repo_full_name'] = df['repo_owner'].astype(str) + '/' + df['repo_name'].astype(str)
 
-    # Final column order (only keep those that exist)
+    # Final column order - LANGUAGES FIRST as requested by teammate
     cols = [
-        'repo_owner','repo_name','repo_full_name',
-        'primary_language','languages','repo_topics',
+        # Language info FIRST
+        'primary_language','languages',
+        # Then repo info
+        'repo_owner','repo_name','repo_full_name','repo_topics',
+        # Issue details
         'issue_number','title','body','labels',
+        # Metadata
         'num_comments','assignees','participants','has_gfi_label',
         'created_at','updated_at','days_open','url',
+        # ML score
         'newcomer_score',
     ]
     cols = [c for c in cols if c in df.columns]
@@ -104,6 +130,13 @@ def main():
     df.to_csv(OUTPUT_CSV, index=False, columns=cols, quoting=csv.QUOTE_MINIMAL, doublequote=True)
     print(f"\n✅ Top {len(df)} recommended issues saved to {OUTPUT_CSV}")
     print(f"🧭 Columns: {', '.join(cols)}")
+    
+    # Show sample of language distribution
+    if 'primary_language' in df.columns:
+        lang_counts = df['primary_language'].value_counts().head(5)
+        print(f"\n📊 Top languages in recommendations:")
+        for lang, count in lang_counts.items():
+            print(f"   {lang}: {count} issues")
 
 if __name__ == '__main__':
     main()
