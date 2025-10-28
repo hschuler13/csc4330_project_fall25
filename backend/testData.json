@@ -1,0 +1,203 @@
+{
+  "users": [
+    {
+      "username": "hschuler13",
+      "languages": [
+        "typescript",
+        "javascript",
+        "html",
+        "css",
+        "java"
+      ],
+      "preferredTopics": [
+        "tailwindcss",
+        "web-development",
+        "react",
+        "frontend",
+        "html5"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "taskID": 1,
+      "title": "testTask1",
+      "datePublished": "2024-10-12T14:32:11Z",
+      "forUser": false,
+      "taskLanguage": [
+        "python"
+      ],
+      "topics": [
+        "django",
+        "flask",
+        "machine-learning"
+      ],
+      "topicScore": 0,
+      "languageScore": "0.00",
+      "dateScore": "0.00",
+      "totalScore": 0
+    },
+    {
+      "taskID": 2,
+      "title": "testTask2",
+      "datePublished": "2025-03-27T22:41:36Z",
+      "forUser": false,
+      "taskLanguage": [
+        "java"
+      ],
+      "topics": [
+        "spring-boot",
+        "maven",
+        "android"
+      ],
+      "topicScore": 0,
+      "languageScore": "0.06",
+      "dateScore": "0.00",
+      "totalScore": 0.06
+    },
+    {
+      "taskID": 3,
+      "title": "testTask3",
+      "datePublished": "2025-09-10T05:44:18Z",
+      "forUser": false,
+      "taskLanguage": [
+        "javascript"
+      ],
+      "topics": [
+        "nodejs",
+        "express",
+        "react"
+      ],
+      "topicScore": 9,
+      "languageScore": "7.00",
+      "dateScore": "15.40",
+      "totalScore": 31.4
+    },
+    {
+      "taskID": 4,
+      "title": "testTask4",
+      "datePublished": "2025-02-18T16:02:10Z",
+      "forUser": false,
+      "taskLanguage": [
+        "typescript"
+      ],
+      "topics": [
+        "angular",
+        "nestjs",
+        "nextjs"
+      ],
+      "topicScore": 0,
+      "languageScore": "35.00",
+      "dateScore": "0.00",
+      "totalScore": 35
+    },
+    {
+      "taskID": 5,
+      "title": "testTask5",
+      "datePublished": "2025-01-09T03:55:27Z",
+      "forUser": false,
+      "taskLanguage": [
+        "html"
+      ],
+      "topics": [
+        "frontend",
+        "web-development",
+        "bootstrap"
+      ],
+      "topicScore": 18,
+      "languageScore": "1.40",
+      "dateScore": "0.00",
+      "totalScore": 19.4
+    },
+    {
+      "taskID": 6,
+      "title": "testTask6",
+      "datePublished": "2025-07-25T20:56:03Z",
+      "forUser": false,
+      "taskLanguage": [
+        "css"
+      ],
+      "topics": [
+        "sass",
+        "tailwindcss",
+        "responsive-design"
+      ],
+      "topicScore": 9,
+      "languageScore": "0.28",
+      "dateScore": "6.00",
+      "totalScore": 15.28
+    },
+    {
+      "taskID": 7,
+      "title": "testTask7",
+      "datePublished": "2025-04-30T11:18:22Z",
+      "forUser": false,
+      "taskLanguage": [
+        "typescript"
+      ],
+      "topics": [
+        "typescript-decorators",
+        "deno",
+        "vue"
+      ],
+      "topicScore": 0,
+      "languageScore": "35.00",
+      "dateScore": "0.00",
+      "totalScore": 35
+    },
+    {
+      "taskID": 8,
+      "title": "testTask8",
+      "datePublished": "2024-12-21T19:13:44Z",
+      "forUser": false,
+      "taskLanguage": [
+        "assembly"
+      ],
+      "topics": [
+        "x86",
+        "arm",
+        "low-level"
+      ],
+      "topicScore": 0,
+      "languageScore": "0.00",
+      "dateScore": "0.00",
+      "totalScore": 0
+    },
+    {
+      "taskID": 9,
+      "title": "testTask9",
+      "datePublished": "2025-06-14T07:29:51Z",
+      "forUser": false,
+      "taskLanguage": [
+        "C"
+      ],
+      "topics": [
+        "embedded",
+        "linux-kernel",
+        "systems-programming"
+      ],
+      "topicScore": 0,
+      "languageScore": "0.00",
+      "dateScore": "0.00",
+      "totalScore": 0
+    },
+    {
+      "taskID": 10,
+      "title": "testTask10",
+      "datePublished": "2024-11-05T08:47:59Z",
+      "forUser": false,
+      "taskLanguage": [
+        "html"
+      ],
+      "topics": [
+        "semantic-html",
+        "html5",
+        "accessibility"
+      ],
+      "topicScore": 9,
+      "languageScore": "1.40",
+      "dateScore": "0.00",
+      "totalScore": 10.4
+    }
+  ]
+}
