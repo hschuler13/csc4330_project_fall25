@@ -1,0 +1,203 @@
+{
+  "users": [
+    {
+      "username": "hschuler13",
+      "languages": [
+        "typescript",
+        "javascript",
+        "html",
+        "css",
+        "java"
+      ],
+      "preferredTopics": [
+        "tailwindcss",
+        "web-development",
+        "react",
+        "frontend",
+        "html5"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "taskID": 1,
+      "title": "testTask1",
+      "daysSincePublished": 312,
+      "forUser": false,
+      "taskLanguage": [
+        "python"
+      ],
+      "topics": [
+        "django",
+        "flask",
+        "machine-learning"
+      ],
+      "topicScore": 0,
+      "languageScore": "0.00",
+      "dateScore": 0,
+      "totalScore": 0
+    },
+    {
+      "taskID": 2,
+      "title": "testTask2",
+      "daysSincePublished": 45,
+      "forUser": true,
+      "taskLanguage": [
+        "java"
+      ],
+      "topics": [
+        "spring-boot",
+        "maven",
+        "android"
+      ],
+      "topicScore": 0,
+      "languageScore": "0.00",
+      "dateScore": "9.00",
+      "totalScore": 9
+    },
+    {
+      "taskID": 3,
+      "title": "testTask3",
+      "daysSincePublished": 127,
+      "forUser": false,
+      "taskLanguage": [
+        "javascript"
+      ],
+      "topics": [
+        "nodejs",
+        "express",
+        "react"
+      ],
+      "topicScore": 0.09000000000000001,
+      "languageScore": "0.07",
+      "dateScore": 0,
+      "totalScore": 0
+    },
+    {
+      "taskID": 4,
+      "title": "testTask4",
+      "daysSincePublished": 263,
+      "forUser": false,
+      "taskLanguage": [
+        "typescript"
+      ],
+      "topics": [
+        "angular",
+        "nestjs",
+        "nextjs"
+      ],
+      "topicScore": 0,
+      "languageScore": "0.35",
+      "dateScore": 0,
+      "totalScore": 0
+    },
+    {
+      "taskID": 5,
+      "title": "testTask5",
+      "daysSincePublished": 184,
+      "forUser": false,
+      "taskLanguage": [
+        "html"
+      ],
+      "topics": [
+        "frontend",
+        "web-development",
+        "bootstrap"
+      ],
+      "topicScore": 0.18000000000000002,
+      "languageScore": "0.01",
+      "dateScore": 0,
+      "totalScore": 0
+    },
+    {
+      "taskID": 6,
+      "title": "testTask6",
+      "daysSincePublished": 79,
+      "forUser": true,
+      "taskLanguage": [
+        "css"
+      ],
+      "topics": [
+        "sass",
+        "tailwindcss",
+        "responsive-design"
+      ],
+      "topicScore": 0.09000000000000001,
+      "languageScore": "0.00",
+      "dateScore": "15.80",
+      "totalScore": 15.89
+    },
+    {
+      "taskID": 7,
+      "title": "testTask7",
+      "daysSincePublished": 201,
+      "forUser": false,
+      "taskLanguage": [
+        "typescript"
+      ],
+      "topics": [
+        "typescript-decorators",
+        "deno",
+        "vue"
+      ],
+      "topicScore": 0,
+      "languageScore": "0.35",
+      "dateScore": 0,
+      "totalScore": 0
+    },
+    {
+      "taskID": 8,
+      "title": "testTask8",
+      "daysSincePublished": 356,
+      "forUser": false,
+      "taskLanguage": [
+        "assembly"
+      ],
+      "topics": [
+        "x86",
+        "arm",
+        "low-level"
+      ],
+      "topicScore": 0,
+      "languageScore": "0.00",
+      "dateScore": 0,
+      "totalScore": 0
+    },
+    {
+      "taskID": 9,
+      "title": "testTask9",
+      "daysSincePublished": 14,
+      "forUser": true,
+      "taskLanguage": [
+        "C"
+      ],
+      "topics": [
+        "embedded",
+        "linux-kernel",
+        "systems-programming"
+      ],
+      "topicScore": 0,
+      "languageScore": "0.00",
+      "dateScore": "2.80",
+      "totalScore": 2.8
+    },
+    {
+      "taskID": 10,
+      "title": "testTask10",
+      "daysSincePublished": 278,
+      "forUser": false,
+      "taskLanguage": [
+        "html"
+      ],
+      "topics": [
+        "semantic-html",
+        "html5",
+        "accessibility"
+      ],
+      "topicScore": 0.09000000000000001,
+      "languageScore": "0.01",
+      "dateScore": 0,
+      "totalScore": 0
+    }
+  ]
+}
