@@ -1,0 +1,5 @@
+@import "tailwindcss";
+.headerTitle {
+  width: auto;
+  margin-left: 50px;
+}
