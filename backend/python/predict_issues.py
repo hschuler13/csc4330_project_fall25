@@ -58,6 +58,11 @@ def save_to_database(df):
       inserted = 0
       for _, row in df.iterrows():
           try:
+              # Convert lists to JSON strings for database storage
+              labels_json = json.dumps(row.get('labels', [])) if isinstance(row.get('labels'), list) else '[]'
+              topics_json = json.dumps(row.get('repo_topics', [])) if isinstance(row.get('repo_topics'), list) else '[]'
+              languages_json = json.dumps(row.get('languages', [])) if isinstance(row.get('languages'), list) else '[]'
+
               cursor.execute("""
                   INSERT OR REPLACE INTO issues (
                       repo_owner, repo_name, issue_number, title, body,
@@ -70,10 +75,10 @@ def save_to_database(df):
                   int(row.get('issue_number', 0)),
                   row.get('title', ''),
                   str(row.get('body', ''))[:500],  # Truncated body
-                  row.get('labels', ''),
-                  row.get('repo_topics', ''),
+                  labels_json,
+                  topics_json,
                   row.get('primary_language', ''),
-                  row.get('languages', ''),
+                  languages_json,
                   int(row.get('days_open', 0)),
                   row.get('url', ''),
                   float(row.get('newcomer_score', 0))
@@ -117,6 +122,9 @@ def main():
 
     # --- Predict top issues (your existing model logic returns top 20) ---
     top_recommendations = predictor.predict_open_issues(open_issues_df)
+
+    # Save to database FIRST (before flattening for CSV)
+    save_to_database(top_recommendations)
 
     # --- Post-process for a clean, teammate-friendly CSV ---
     df = top_recommendations.copy()
@@ -174,7 +182,6 @@ def main():
     Path(OUTPUT_CSV).parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(OUTPUT_CSV, index=False, columns=cols, quoting=csv.QUOTE_MINIMAL, doublequote=True)
     print(f"\n Top {len(df)} recommended issues saved to {OUTPUT_CSV}")
-    save_to_database(df)
     print(f" Columns: {', '.join(cols)}")
     
     # Show sample of language distribution

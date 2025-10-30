@@ -1,6 +1,9 @@
 // src/server.ts
 import express, { type RequestHandler } from 'express';
 import dotenv from 'dotenv';
+import { getUser, getUserRecommendations, getAllIssues } from './database/db.js';
+import { runUserFilter } from './algorithms/taskUserFilter.js';
+import { getTopRecommendations } from './algorithms/taskDistributionAlgorithm.js';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -12,6 +15,8 @@ console.log('CLIENT_SECRET:', process.env.GITHUB_CLIENT_SECRET ? '✓ exists' : 
 console.log('PORT:', process.env.PORT || '3000 (default)');
 
 const app = express();
+// Middleware to parse JSON bodies
+app.use(express.json());
 const PORT = Number(process.env.PORT ?? 3000);
 const CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 const FRONTEND_URL = process.env.FRONTEND_URL ?? 'http://localhost:5173';
@@ -143,6 +148,130 @@ const meHandler: RequestHandler = (_req, res) => {
   res.json({ ok: true, user: null });
 };
 app.get('/api/me', meHandler);
+
+// ============================================================
+  // API ENDPOINTS FOR FRONTEND
+  // ============================================================
+
+  // GET /api/user/:username - Get user profile from database
+  const getUserHandler: RequestHandler = async (req, res) => {
+    try {
+      const { username } = req.params;
+      const user = getUser(username) as any;
+
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          error: 'User not found'
+        });
+      }
+
+      // Parse JSON fields
+      const profile = {
+        ...user,
+        preferred_topics: user.preferred_topics ? JSON.parse(user.preferred_topics) : [],
+        preferred_languages: user.preferred_languages ? JSON.parse(user.preferred_languages) : []
+      };
+
+      res.json({ success: true, user: profile });
+    } catch (error) {
+      console.error('Error fetching user:', error);
+      res.status(500).json({ success: false, error: 'Server error' });
+    }
+  };
+  app.get('/api/user/:username', getUserHandler);
+
+  // GET /api/recommendations/:username - Get personalized recommendations
+  const getRecommendationsHandler: RequestHandler = async (req, res) => {
+    try {
+      const { username } = req.params;
+      const limit = Number(req.query.limit) || 5;
+
+      // Check if user exists
+      const user = getUser(username) as any;
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          error: 'User not found. Please sign in first.'
+        });
+      }
+
+      // Get recommendations from database
+      const recommendations = getUserRecommendations(username, limit);
+
+      if (recommendations.length === 0) {
+        return res.json({
+          success: true,
+          recommendations: [],
+          message: 'No recommendations yet. Generate them first.'
+        });
+      }
+
+      // Parse JSON fields in recommendations
+      const parsed = recommendations.map((rec: any) => ({
+        ...rec,
+        labels: rec.labels ? JSON.parse(rec.labels) : [],
+        repo_topics: rec.repo_topics ? JSON.parse(rec.repo_topics) : [],
+        languages: rec.languages ? JSON.parse(rec.languages) : []
+      }));
+
+      res.json({ success: true, recommendations: parsed });
+    } catch (error) {
+      console.error('Error fetching recommendations:', error);
+      res.status(500).json({ success: false, error: 'Server error' });
+    }
+  };
+  app.get('/api/recommendations/:username', getRecommendationsHandler);
+
+  // POST /api/recommendations/:username/generate - Generate recommendations for user
+  const generateRecommendationsHandler: RequestHandler = async (req, res) => {
+    try {
+      const { username } = req.params;
+      const limit = Number(req.body?.limit) || 20;
+
+      // Check if user exists
+      const user = getUser(username) as any;
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          error: 'User not found. Please sign in first.'
+        });
+      }
+
+      console.log(`Generating recommendations for ${username}...`);
+
+      // Run the recommendation algorithm
+      await runUserFilter(username, limit);
+
+      // Get the top recommendations
+      const recommendations = getUserRecommendations(username, 5);
+
+      res.json({
+        success: true,
+        message: `Generated ${recommendations.length} recommendations`,
+        recommendations
+      });
+    } catch (error) {
+      console.error('Error generating recommendations:', error);
+      res.status(500).json({ success: false, error: 'Server error' });
+    }
+  };
+  app.post('/api/recommendations/:username/generate',
+  generateRecommendationsHandler);
+
+  // GET /api/issues - Get all issues (for debugging/admin)
+  const getIssuesHandler: RequestHandler = (_req, res) => {
+    try {
+      const issues = getAllIssues();
+      res.json({ success: true, count: issues.length, issues });
+    } catch (error) {
+      console.error('Error fetching issues:', error);
+      res.status(500).json({ success: false, error: 'Server error' });
+    }
+  };
+  app.get('/api/issues', getIssuesHandler);
+
+  // ============================================================
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

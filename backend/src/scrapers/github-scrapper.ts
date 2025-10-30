@@ -1,5 +1,6 @@
 // github-scraper.ts
 // Updated GitHub scraper that works with OAuth and returns data
+import { insertOrUpdateUser } from '../database/db.js';
 
 // Define types for the GitHub API responses
 interface GitHubUser {
@@ -314,8 +315,31 @@ export class GitHubScraper {
   console.log(`  (${accountAge} years on GitHub, ${user.public_repos} repos, ${prData.total_count} PRs)`);
   
   console.log('\n' + '='.repeat(50));
-  console.log('✅ Scraping complete!\n');
+  console.log('Scraping complete!\n');
     
+    try {
+        insertOrUpdateUser({
+          login: user.login,
+          name: user.name,
+          bio: user.bio,
+          public_repos: user.public_repos,
+          followers: user.followers,
+          following: user.following,
+          created_at: user.created_at,
+          updated_at: user.updated_at,
+          avatar_url: user.avatar_url,
+          experienceLevel: experienceLevel,
+          preferredTopics: topTopics,
+          preferredLanguages: primaryLanguages,
+          accountAgeYears: accountAge,
+          totalPRs: prData.total_count,
+          activityLevel: activityLevel
+        });
+        console.log('User profile saved to database');
+      } catch (error) {
+        console.error('Error saving user to database:', error);
+      }
+
     // Return structured data
     return {
       user,

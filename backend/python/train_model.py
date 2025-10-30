@@ -338,9 +338,9 @@ class GFIPredictor:
         open_issues_df['newcomer_score'] = predictions
         
         # Return top recommendations
-        top_issues = open_issues_df.nlargest(20, 'newcomer_score')
-        
-        print("\n🎯 Top 20 Recommended Issues for Newcomers:")
+        top_issues = open_issues_df.nlargest(100, 'newcomer_score')
+
+        print("\n🎯 Top 100 Recommended Issues for Newcomers:")
         for _, issue in top_issues.iterrows():
             title_preview = issue['title'][:50] + '...' if len(issue['title']) > 50 else issue['title']
             print(f"  {issue.get('repo_name', 'Unknown')}#{issue.get('issue_number', '?')}: {title_preview} (Score: {issue['newcomer_score']:.3f})")
