@@ -11,9 +11,11 @@ venv/
 __pycache__/
 *.pyc
 
-# Model files
+# Model filess
 model/
 
+#claude
+.claude
 
 # Build output
 dist/

@@ -4,6 +4,7 @@ import csv
 from pathlib import Path
 import pandas as pd
 from train_model import GFIPredictor  # Import your class
+import sqlite3
 
 MODEL_PATH = '../model/gfi_predictor.pkl'
 INPUT_JSON = '../data/scraped/open_gfi_issues/open_gfi_issues_latest.json'
@@ -43,6 +44,50 @@ def _format_languages(languages):
         return '; '.join(formatted)
     return str(languages)
 
+def save_to_database(df):
+      """Save predicted issues to SQLite database"""
+      DB_PATH = '../src/database/userdb.sqlite'
+
+      conn = sqlite3.connect(DB_PATH)
+      cursor = conn.cursor()
+
+      # Clear old issues first
+      cursor.execute("DELETE FROM issues WHERE days_open > 90")
+
+      # Insert each issue
+      inserted = 0
+      for _, row in df.iterrows():
+          try:
+              cursor.execute("""
+                  INSERT OR REPLACE INTO issues (
+                      repo_owner, repo_name, issue_number, title, body,
+                      labels, repo_topics, primary_language, languages,
+                      days_open, url, newcomer_score, scraped_at
+                  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
+              """, (
+                  row.get('repo_owner', ''),
+                  row.get('repo_name', ''),
+                  int(row.get('issue_number', 0)),
+                  row.get('title', ''),
+                  str(row.get('body', ''))[:500],  # Truncated body
+                  row.get('labels', ''),
+                  row.get('repo_topics', ''),
+                  row.get('primary_language', ''),
+                  row.get('languages', ''),
+                  int(row.get('days_open', 0)),
+                  row.get('url', ''),
+                  float(row.get('newcomer_score', 0))
+              ))
+              inserted += 1
+          except Exception as e:
+              print(f" Error inserting issue: {e}")
+              continue
+
+      conn.commit()
+      conn.close()
+
+      print(f"\n Saved {inserted} issues to database at {DB_PATH}")
+
 def main():
     # Load the trained model
     predictor = GFIPredictor()
@@ -55,7 +100,7 @@ def main():
     # Convert to DataFrame
     open_issues_df = pd.DataFrame(data.get('issues', []))
     if open_issues_df.empty:
-        print("⚠️ No issues found in JSON.")
+        print("No issues found in JSON.")
         return
 
     # --- Normalize timestamps BEFORE prediction (fix tz-aware/naive subtraction) ---
@@ -128,13 +173,14 @@ def main():
     # Save
     Path(OUTPUT_CSV).parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(OUTPUT_CSV, index=False, columns=cols, quoting=csv.QUOTE_MINIMAL, doublequote=True)
-    print(f"\n✅ Top {len(df)} recommended issues saved to {OUTPUT_CSV}")
-    print(f"🧭 Columns: {', '.join(cols)}")
+    print(f"\n Top {len(df)} recommended issues saved to {OUTPUT_CSV}")
+    save_to_database(df)
+    print(f" Columns: {', '.join(cols)}")
     
     # Show sample of language distribution
     if 'primary_language' in df.columns:
         lang_counts = df['primary_language'].value_counts().head(5)
-        print(f"\n📊 Top languages in recommendations:")
+        print(f"\n Top languages in recommendations:")
         for lang, count in lang_counts.items():
             print(f"   {lang}: {count} issues")
 

@@ -1,0 +1,16 @@
+# Python dependencies for GFI ML Recommender
+# Install with: pip install -r requirements.txt
+
+# Data processing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Machine Learning
+xgboost>=2.0.0
+scikit-learn>=1.3.0
+
+# Model persistence (included with scikit-learn but listed for clarity)
+joblib>=1.3.0
+
+npm install
+npm i --save-dev @types/node @types/express

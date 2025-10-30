@@ -292,8 +292,6 @@ class GFIPredictor:
         else:
             features['days_to_close'] = 30
         
-        # Resolver commits - unknown for open issues
-        features['resolver_commits'] = -1
         
         # Repository encoding
         if 'repo_name' in open_issues_df.columns and 'repo_name' in self.label_encoders:
