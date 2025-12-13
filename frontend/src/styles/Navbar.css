@@ -1,22 +1,24 @@
 .navbar {
   height: 100%;  
-  width: 61px; 
+  width: 100px; 
   position: fixed; 
   z-index: 1; 
   top: 0;  
   right: 0;
-  background-color: #2e2823; 
+  background-color: #9b4a47; 
   overflow-x: hidden; 
   padding-top: 50px;
   transition: width 0.2s;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-top-left-radius: 18px;
+  border-top-left-radius: 8px;
   border-bottom-left-radius: 18px;
 }
 .navbar.open {
-  width: 210px;
+  width: 255px;
+    box-shadow: 10px 8px 20px #85403d;
+
 }
 
 .navbar.open .triangle {
@@ -49,7 +51,8 @@
   display: block;
   opacity: 0;
   transform: translateX(20px);
-  transition: opacity 0.3s, transform 0.3s;
+  transition: opacity 0.3s, transform 0.3s; 
+  z-index: 10;
 }
 .navbar.open .HomeNav {
   opacity: 1; 
@@ -66,6 +69,7 @@
   font-size: 22px;
   color: #f1f1f1;
   display: block;
+  z-index: 10;
 }
 .navbar.open .Link2 {
   opacity: 1;
@@ -82,6 +86,7 @@
   font-size: 22px;
   color: #f1f1f1;
   display: block;
+  z-index: 10;
 }
 .navbar.open .Link3 {
   opacity: 1;
@@ -94,13 +99,52 @@
   display: block;
   opacity: 0;
   transform: translateX(20px);
-  transition: opacity 0.3s, transform 0.3s;
+  transition: opacity 0.1s, transform 0.1s;
   font-size: 22px;
   color: #f1f1f1;
   display: block;
+  z-index: 10;
 }
 .navbar.open .Link4 {
   opacity: 1;
   transform: translateX(0);
+}
+
+.navbar .Mode {
+padding: 250px 8px 50px 30px; 
+text-decoration: none;
+display: inline-flex;
+width: fit-content;
+opacity: 0;
+transform: translateX(20px);
+transition: opacity 0.3s, transform 0.3s;
+font-size: 22px;
+color: #f1f1f1;
+display: block;
+}
+
+.navbar.open .Mode {
+opacity: 1;
+transform: translateX(0);
+}
+
+.Mode {
+position: absolute;
+}
+
+.modeDropdown {
+position: absolute; 
+}
+
+.LinktoMode1 {
+position: relative;
+top: 100%;
+  font-size: 22px;
+}
+
+.LinktoMode2 {
+position: relative; 
+top: 100;
+  font-size: 22px;
 }
 

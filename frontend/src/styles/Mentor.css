@@ -1,0 +1,372 @@
+.Background {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 4rem;
+  width: 100%;
+  max-width: 1600px;
+  min-height: 100vh; 
+  margin: 0 auto; 
+  padding: 2rem; 
+  background-color: #e4e0e0;
+  box-sizing: border-box;
+  align-items: start;
+}
+
+.LeftSide, .Center, .RightSide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.NotifyBox {
+  height : 550px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1.3rem;
+  background-color: #f2f2f2f1;
+  border-radius: 0 0 24px 24px; 
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.244);  
+  text-align: center;
+  
+  /*overflow: hidden;*/
+} 
+.NotifyBox h1 {
+  font-size: 1.4rem;
+  padding-left: 4.6rem;
+  padding-top: 1rem;
+  font-weight: 600px;
+  font-size: 1.5rem;
+  padding-right: 4.6rem;
+  padding-bottom: 1.3rem;
+    border-left: 2px solid #000;
+  border-bottom: 2px solid #000;
+    box-shadow: 0px 6px 0px 0px rgba(145, 145, 145, 0.187);  
+
+  transition: 0.1s;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px; 
+  
+}
+
+.MsgLine2 {
+  align-items: center;
+  top: 120px;
+  right: 98px;
+  align-items: center;
+}
+
+.NotificationContent {
+  margin-top: 1rem;
+  display: flex; 
+  flex-direction: column;
+  gap : 0.6rem;
+  font-size: 1.1rem;
+  align-items: center;
+  font-weight: 100;
+  color: rgb(115, 114, 114);
+}
+
+.Center {
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.Center::-webkit-scrollbar {
+    display:none;
+  } 
+
+.Background::before{
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0; 
+  bottom: 0; 
+  z-index : -1;
+  background-color: #ebe5e5;
+}
+
+.CreateTitleHomeBox {
+  margin-top: 5px;
+}
+.CreateNewTasks {
+  background: linear-gradient(145deg, #f7f7f7, #f6f6f6); 
+  border-radius: 18px; 
+  width: 100%;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15); 
+  padding: 1.5rem;
+  text-align: center;
+  min-height: 345px;
+  max-width: 454px;
+  overflow: hidden;
+  transition: max-height 0.6s ease-in-out;
+  margin-bottom: 1.2rem;
+}
+
+.inputContainer {
+  position: relative;
+  width: 454px;
+  margin-top: 2.5rem;
+  align-items: center;
+}
+
+.inputContainer input{
+  width: 90%;
+  padding: 10px;
+  outline: none;
+  border: none;
+  color: #000;
+  font-size: 1em;
+  background: transparent;
+  border-left: 2px solid #000;
+  border-bottom: 2px solid #000;
+  transition: 0.1s;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px; 
+}
+
+.inputContainer textarea{ 
+  width: 90%;
+  padding: 10px;
+  outline: none;
+  border: none;
+  min-height: 100px;
+  color: #000;
+  background: transparent;
+  border-left: 2.5px solid #000;
+  border-bottom: 2.5px solid #000;
+  transition: 0.1s;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  resize: none;
+}
+
+.TitleofTask {
+  position: absolute;
+  left: 0;
+  margin-left: 10px;
+  padding: 14px;
+  pointer-events: none;
+  font-size: 12px;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  border-radius: 8px;
+  transition: 0.5s ease all;
+}
+
+.inputContainer :valid~  .TitleofTask, 
+.inputContainer :focus~  .TitleofTask{
+  transform: translateX(15px) translateY(-15px);
+  font-size: 0.8em;
+  padding: 5px 10px;
+  letter-spacing: 0.2em;
+  color: #780707;
+  background: #eae6e6;
+  border: 2px;
+}
+
+.inputContainer input:valid , 
+.inputContainer input:focus {
+    border: 2px solid #000;
+  border-radius: 8px;
+}
+
+.inputContainer textarea:valid , 
+.inputContainer textarea:focus {
+    border: 2px solid #000;
+  border-radius: 8px;
+}
+
+.AddButton {
+  position: relative;
+  margin-top: 1.1rem;
+  height: 45px;
+  width: 100px;
+  border-radius: 7px;
+  border: 2px solid #000;
+  cursor: pointer;
+  background-color: #dd6a66;
+  transition: 0.5s;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 2px;
+  margin-bottom: 1em;
+}
+
+.AddButton:hover {
+  border-color:#781212;
+  background-color: #a51b1b;
+  color: white;
+}
+
+.TabComponent{
+  display: flex; 
+  gap: 0.12rem;
+  width: 100%; 
+  max-width: 500px;
+  margin-bottom: -48px;
+  z-index: 10;
+}
+
+.TabComponent button{
+  padding: 1rem 1.40rem;
+  border: 1.6px solid #3d3d3d;
+  background-color: #eae6e6ce; 
+  color:#1e1e1e; 
+  font-size: 0.9rem;
+  font-weight: 540;
+  border-radius: 10px 10px 0 0;
+  cursor: pointer; 
+  transition: all 0.2 ease;
+  border-bottom: 1px solid #b3b3b3;
+}
+
+.TabComponent button.active {
+    background-color: #f7f7f7; 
+    color:#aa331e; 
+  border-bottom: 1px solid #f7f7f7;
+}
+
+.TabComponent button:hover {
+    background-color: #ece9e9; 
+}
+
+.ExistingTasks{
+  display: flex;
+  width: 100%;
+  max-width: 508px;
+  flex-direction: column;
+  align-items: center;  
+  border-radius: 0 0 14px 14px;
+  margin-top: 0;
+  padding: 1rem;
+  overflow: hidden;
+} 
+
+.MtaskBox {
+  background: linear-gradient(145deg, #f7f7f7, #f6f6f6); 
+  border-radius: 14px; 
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15); 
+  width: 100%;
+  text-align: left;
+  max-height: 200px;
+  min-height: 250px;
+  overflow: hidden;
+  margin-bottom: 1.40rem;
+  border: 3.2px solid #0f0f0f;
+  transition: max-height 0.6s ease-in-out;
+}
+
+.MTaskBoxHeader {
+  background-color:#db6a66;
+  box-shadow: inset 0 -3px 10px 2px rgba(147, 24, 24, 0.3);
+  padding: 1.10rem 1.5rem;
+}
+
+.MTaskBoxHeader h3 {
+  color: #202020;  
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-bottom: 3%;
+}
+
+.MTaskBoxBody {
+  padding: 1.5rem;
+}
+
+.MTaskBoxBody p {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+}
+.mentorActions {
+    padding: 1rem ;
+
+}
+.DeleteTaskBtn1 {
+display: flex;  
+margin-top: 0rem ;
+  height: 40px;
+  width: 85px;
+  border-radius: 7px ;
+  border: 2px solid #000 ;
+  cursor: pointer;
+  background-color: #dd6a6673 ;
+  transition: 0.5s ;
+  text-transform: uppercase ;
+  font-size: 10px ;
+  margin-bottom: 1em ;
+    letter-spacing: 2px;
+    margin-left: auto;
+  align-items: center;
+}
+
+.DeleteTaskBtn2 {
+ position: relative ;
+  margin-top: 0rem ;
+  height: 45px;
+  width: 80px;
+  border-radius: 7px ;
+  border: 2px solid #000 ;
+  cursor: pointer;
+  background-color: #db332d73 ;
+  transition: 0.5s ;
+  text-transform: uppercase ;
+  font-size: 10px ;
+  margin-bottom: 1em ;
+    letter-spacing: 2px;
+
+}
+
+.DeleteTaskBtn3 {
+ position: relative ;
+  margin-top: 0rem ;
+  height: 45px;
+  width: 80px;
+  border-radius: 7px ;
+  border: 2px solid #000 ;
+  cursor: pointer;
+  background-color: #dd6a6673 ;
+  transition: 0.5s ;
+  text-transform: uppercase ;
+  font-size: 10px ;
+  margin-bottom: 1em ;
+      letter-spacing: 2px;
+
+}
+.mentorActions .DeleteTaskBtn {
+  position: relative ;
+  margin-top: 0rem ;
+  height: 45px;
+  width: 80px;
+  border-radius: 7px ;
+  border: 2px solid #000 ;
+  cursor: pointer;
+  background-color: #dd6a6673 ;
+  transition: 0.5s ;
+  text-transform: uppercase ;
+  font-size: 10px ;
+  margin-bottom: 1em ;
+      letter-spacing: 2px;
+
+}
+
+
+
+@media (max-width: 1100px) {
+  .Background {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .LeftSide, .Center, .RightSide {
+    width: 100;
+  }
+}
